@@ -165,7 +165,7 @@ public class CollectionSplitUtil {
             }
         }
 
-        Object lastObjectId = minId;
+        Object lastObjectId = minId.toHexString();
         for (Object splitPoint : splitPoints) {
             Range range = new Range();
             range.lowerBound = lastObjectId;
@@ -175,7 +175,7 @@ public class CollectionSplitUtil {
         }
         Range range = new Range();
         range.lowerBound = lastObjectId;
-        range.upperBound = maxId;
+        range.upperBound = maxId.toHexString();
         rangeList.add(range);
 
         return rangeList;
