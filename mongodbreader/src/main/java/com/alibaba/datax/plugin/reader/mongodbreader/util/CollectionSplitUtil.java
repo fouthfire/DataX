@@ -81,7 +81,13 @@ public class CollectionSplitUtil {
 
         Document result = database.runCommand(new Document("collStats", collName));
 
-        long docCount = result.getInteger("count");
+        Object allDocCount = result.get("count");
+        long docCount=0;
+        if (allDocCount instanceof Integer) {
+            docCount = ((Integer) allDocCount).longValue();
+        } else if (allDocCount instanceof Double) {
+            docCount = ((Double) allDocCount).longValue();
+        }
         if (docCount == 0) {
             return rangeList;
         }
