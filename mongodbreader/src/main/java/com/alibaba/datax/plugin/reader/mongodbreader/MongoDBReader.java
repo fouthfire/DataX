@@ -156,10 +156,9 @@ public class MongoDBReader extends Reader {
                         //TODO deal with Double.isNaN()
                         if(Double.isNaN((Double) tempCol))
                         {
-                            record.addColumn(new StringColumn((String) tempCol));
+                            record.addColumn(new StringColumn(null));
                         }else {
                             record.addColumn(new DoubleColumn((Double) tempCol));
-
                         }
                     } else if (tempCol instanceof Boolean) {
                         record.addColumn(new BoolColumn((Boolean) tempCol));
