@@ -154,7 +154,7 @@ public class MongoDBReader extends Reader {
                         record.addColumn(new StringColumn(null));
                     }else if (tempCol instanceof Double) {
                         //TODO deal with Double.isNaN()
-                        record.addColumn(new DoubleColumn((Double) tempCol));
+                        record.addColumn(new DoubleColumn((String) tempCol));
                     } else if (tempCol instanceof Boolean) {
                         record.addColumn(new BoolColumn((Boolean) tempCol));
                     } else if (tempCol instanceof Date) {
