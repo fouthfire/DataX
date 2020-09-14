@@ -92,10 +92,23 @@ public class CollectionSplitUtil {
             return rangeList;
         }
         MongoCollection<Document> col = database.getCollection(collName);
-        ObjectId minId = col.find(Document.parse(query)).limit(1).first().getObjectId(KeyConstant.MONGO_PRIMARY_ID);
-        ObjectId maxId = col.find(Document.parse(query)).limit(1).sort(Document.parse("{_id:-1}")).first().getObjectId(KeyConstant.MONGO_PRIMARY_ID);
+        ObjectId minId = null;
+        ObjectId maxId = null;
 
-        docCount = col.count(Document.parse(query));
+        if(null == query)
+        {
+            minId = col.find().limit(1).first().getObjectId(KeyConstant.MONGO_PRIMARY_ID);
+            maxId = col.find().limit(1).sort(Document.parse("{_id:-1}")).first().getObjectId(KeyConstant.MONGO_PRIMARY_ID);
+            docCount = col.count();
+
+        }else
+        {
+            minId = col.find(Document.parse(query)).limit(1).first().getObjectId(
+                    KeyConstant.MONGO_PRIMARY_ID);
+            maxId = col.find(Document.parse(query)).limit(1).sort(Document.parse(
+                    "{_id:-1}")).first().getObjectId(KeyConstant.MONGO_PRIMARY_ID);
+            docCount = col.count(Document.parse(query));
+        }
 
         int avgObjSize = 1;
         Object avgObjSizeObj = result.get("avgObjSize");
