@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.alibaba.datax.common.element.BoolColumn;
 import com.alibaba.datax.common.element.DateColumn;
@@ -126,7 +127,6 @@ public class MongoDBReader extends Reader {
             dbCursor = col.find(filter).iterator();
             while (dbCursor.hasNext()) {
                 Document item = dbCursor.next();
-                item = Document.parse(item.toJson(CollectionSplitUtil.getJsonWriterSettings()));
                 Record record = recordSender.createRecord();
                 Iterator columnItera = mongodbColumnMeta.iterator();
                 while (columnItera.hasNext()) {
@@ -178,9 +178,11 @@ public class MongoDBReader extends Reader {
                                 throw DataXException.asDataXException(MongoDBReaderErrorCode.ILLEGAL_VALUE,
                                     MongoDBReaderErrorCode.ILLEGAL_VALUE.getDescription());
                             } else {
-                                ArrayList array = (ArrayList)tempCol;
-                                array.stream().filter(x->x instanceof Document).map(x->((Document) x).toJson());
-                                String tempArrayStr = Joiner.on(splitter).join(array);
+                                ArrayList<Document> array = (ArrayList)tempCol;
+
+                                List a = array.stream().filter(x-> x instanceof Document).map(x->x.toJson()).collect(
+                                        Collectors.toList());
+                                String tempArrayStr = Joiner.on(splitter).join(a);
                                 record.addColumn(new StringColumn(tempArrayStr));
                             }
                         } else {
