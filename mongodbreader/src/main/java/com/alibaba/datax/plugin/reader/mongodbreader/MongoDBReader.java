@@ -181,8 +181,7 @@ public class MongoDBReader extends Reader {
                                 ArrayList array = (ArrayList)tempCol;
 
                                 String tempArrayStr = Joiner.on(splitter).join(array);
-                                record.addColumn(new StringColumn(Document.parse(tempArrayStr).toJson(CollectionSplitUtil.getJsonWriterSettings()
-                                        )));
+                                record.addColumn(new StringColumn(tempArrayStr));
                             }
                         } else {
                             record.addColumn(new StringColumn(tempCol.toString()));
