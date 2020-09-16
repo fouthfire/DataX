@@ -126,6 +126,7 @@ public class MongoDBReader extends Reader {
             dbCursor = col.find(filter).iterator();
             while (dbCursor.hasNext()) {
                 Document item = dbCursor.next();
+                item = Document.parse(item.toJson(CollectionSplitUtil.getJsonWriterSettings()));
                 Record record = recordSender.createRecord();
                 Iterator columnItera = mongodbColumnMeta.iterator();
                 while (columnItera.hasNext()) {
