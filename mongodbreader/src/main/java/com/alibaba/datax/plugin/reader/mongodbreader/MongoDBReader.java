@@ -179,7 +179,7 @@ public class MongoDBReader extends Reader {
                                     MongoDBReaderErrorCode.ILLEGAL_VALUE.getDescription());
                             } else {
                                 ArrayList array = (ArrayList)tempCol;
-
+                                array.stream().filter(x->x instanceof Document).map(x->((Document) x).toJson());
                                 String tempArrayStr = Joiner.on(splitter).join(array);
                                 record.addColumn(new StringColumn(tempArrayStr));
                             }
