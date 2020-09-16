@@ -176,9 +176,9 @@ public class MongoDBReader extends Reader {
                                 throw DataXException.asDataXException(MongoDBReaderErrorCode.ILLEGAL_VALUE,
                                     MongoDBReaderErrorCode.ILLEGAL_VALUE.getDescription());
                             } else {
-                                BsonDocument bsonDocument = (BsonDocument)tempCol;
+                                Document document = (Document)tempCol;
 
-                                record.addColumn(new StringColumn(bsonDocument.toJson()));
+                                record.addColumn(new StringColumn(document.toJson()));
 //                                ArrayList array = (ArrayList)tempCol;
 //
 //                                String tempArrayStr = Joiner.on(splitter).join(array);
