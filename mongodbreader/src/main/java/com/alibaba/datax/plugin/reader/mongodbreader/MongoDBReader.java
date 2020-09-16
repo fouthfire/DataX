@@ -176,15 +176,10 @@ public class MongoDBReader extends Reader {
                                 throw DataXException.asDataXException(MongoDBReaderErrorCode.ILLEGAL_VALUE,
                                     MongoDBReaderErrorCode.ILLEGAL_VALUE.getDescription());
                             } else {
-//                                Document.parse(item.toJson());
-//                                Document document = (Document)tempCol;
-//
-//                                record.addColumn(new StringColumn(document.toJson()));
                                 ArrayList array = (ArrayList)tempCol;
-                                array.stream().filter(x-> x instanceof Document).forEach(x-> ((Document)x).toJson());
 
                                 String tempArrayStr = Joiner.on(splitter).join(array);
-                                record.addColumn(new StringColumn(tempArrayStr));
+                                record.addColumn(new StringColumn(Document.parse(tempArrayStr).toJson()));
                             }
                         } else {
                             record.addColumn(new StringColumn(tempCol.toString()));
