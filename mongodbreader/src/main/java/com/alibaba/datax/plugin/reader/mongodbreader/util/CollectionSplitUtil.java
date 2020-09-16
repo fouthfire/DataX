@@ -10,6 +10,7 @@ import com.mongodb.MongoCommandException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.bson.json.JsonWriterSettings;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
@@ -198,6 +199,19 @@ public class CollectionSplitUtil {
         rangeList.add(range);
 
         return rangeList;
+    }
+
+    // bson转json格式设置
+    public static JsonWriterSettings getJsonWriterSettings() {
+        JsonWriterSettings jsonWriterSettings = JsonWriterSettings.builder()
+                .dateTimeConverter((value, writer) -> writer.writeString(Long.toString(value)))
+                .decimal128Converter((value, writer) -> writer.writeNumber(value.toString()))
+                .objectIdConverter((value, writer) -> writer.writeString(value.toString()))
+                .int32Converter((value, writer) -> writer.writeNumber(value.toString()))
+                .int64Converter((value, writer) -> writer.writeString(Long.toString(value)))
+                .build();
+
+        return jsonWriterSettings;
     }
 }
 

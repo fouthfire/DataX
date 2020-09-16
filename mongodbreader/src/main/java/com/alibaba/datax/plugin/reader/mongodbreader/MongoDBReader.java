@@ -30,6 +30,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import org.bson.BsonDocument;
 import org.bson.Document;
+import org.bson.json.JsonWriterSettings;
 import org.bson.types.ObjectId;
 
 /**
@@ -179,7 +180,8 @@ public class MongoDBReader extends Reader {
                                 ArrayList array = (ArrayList)tempCol;
 
                                 String tempArrayStr = Joiner.on(splitter).join(array);
-                                record.addColumn(new StringColumn(Document.parse(tempArrayStr).toJson()));
+                                record.addColumn(new StringColumn(Document.parse(tempArrayStr).toJson(CollectionSplitUtil.getJsonWriterSettings()
+                                        )));
                             }
                         } else {
                             record.addColumn(new StringColumn(tempCol.toString()));
