@@ -108,7 +108,7 @@ public class CollectionSplitUtil {
                     KeyConstant.MONGO_PRIMARY_ID);
             maxId = col.find(Document.parse(query)).limit(1).sort(Document.parse(
                     "{_id:-1}")).first().getObjectId(KeyConstant.MONGO_PRIMARY_ID);
-            docCount = col.count(Document.parse(query));
+            docCount = col.countDocuments(Document.parse(query));
         }
 
         int avgObjSize = 1;
@@ -124,16 +124,16 @@ public class CollectionSplitUtil {
 
         // test if user has splitVector role(clusterManager)
         boolean supportSplitVector = true;
-        try {
-            database.runCommand(new Document("splitVector", dbName + "." + collName)
-                .append("keyPattern", new Document(KeyConstant.MONGO_PRIMARY_ID, 1))
-                .append("force", true));
-        } catch (MongoCommandException e) {
-            if (e.getErrorCode() == KeyConstant.MONGO_UNAUTHORIZED_ERR_CODE ||
-                e.getErrorCode() == KeyConstant.MONGO_ILLEGALOP_ERR_CODE) {
-                supportSplitVector = false;
-            }
-        }
+//        try {
+//            database.runCommand(new Document("splitVector", dbName + "." + collName)
+//                .append("keyPattern", new Document(KeyConstant.MONGO_PRIMARY_ID, 1))
+//                .append("force", true));
+//        } catch (MongoCommandException e) {
+//            if (e.getErrorCode() == KeyConstant.MONGO_UNAUTHORIZED_ERR_CODE ||
+//                e.getErrorCode() == KeyConstant.MONGO_ILLEGALOP_ERR_CODE) {
+//                supportSplitVector = false;
+//            }
+//        }
 
 
 
