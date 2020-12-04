@@ -19,6 +19,7 @@ import com.alibaba.datax.common.spi.Reader;
 import com.alibaba.datax.common.util.Configuration;
 import com.alibaba.datax.plugin.reader.mongodbreader.util.CollectionSplitUtil;
 import com.alibaba.datax.plugin.reader.mongodbreader.util.MongoUtil;
+import com.alibaba.datax.plugin.reader.mongodbreader.util.XJson;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
